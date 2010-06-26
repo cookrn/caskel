@@ -1,6 +1,6 @@
 #CASKEL
 
-A [Monk](http://monkrb.com/) ruby skeleton for building test-driven API applications with Cassandra as a data store.
+A [Monk](http://monkrb.com/) ruby skeleton for building test-driven JSON API applications with Cassandra as a data store.
 
 Suggestions, issues, forking, and pull requests are welcome and encouraged.
 

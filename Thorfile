@@ -61,7 +61,8 @@ private
 
   def cassandra_start
     if File.exists?(CASSANDRA_PID)
-      say_status :error, "Cassandra is already running"
+      say_status :warning, "Cassandra may already be running - attempting to stop"
+      cassandra_stop
     else
       result = %x[cassandra -p #{CASSANDRA_PID}]
       if result.include? "Starting up server"
@@ -76,8 +77,11 @@ private
 
   def cassandra_stop
     if File.exists?(CASSANDRA_PID)
+      pid = File.read(CASSANDRA_PID)
+      system "kill #{pid}"
       say_status :success, "Cassandra stopped"
-      system "kill #{File.read(CASSANDRA_PID)}"
+    else
+      say_status :error, "Cannot stop Cassandra - no PID file"
     end
   end
 end

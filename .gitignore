@@ -1,8 +1,8 @@
-/config/settings.yml
-/config/redis/development.conf
-/config/redis/test.conf
-/db/redis/development
-/db/redis/test
+/db/cassandra
+/db/cassandra/*
 /tmp
 /webrat.log
-/vendor/webrat/vendor
+/vendor
+/vendor/*
+/log
+/log/*

@@ -1,7 +1,7 @@
 require 'yaml'
 
 def monk_settings(key)
-  $monk_settings ||= YAML.load_file(root_path("config", "settings.yml"))[RACK_ENV.to_sym]
+  $monk_settings ||= YAML.load_file(root_path("config", "settings.yml"))[RACK_ENV.to_sym] ||= YAML.load_file(root_path("config", "settings.example.yml"))[RACK_ENV.to_sym]
 
   unless $monk_settings.include?(key)
     message = "No setting defined for #{key.inspect}."

@@ -9,19 +9,49 @@ class Main
     #   def format_date(date, format = "%d/%m/%Y")
     #     date.strftime(format)
     #   end
+    
+    def return405
+      
+      #define your response hash
+      response = {
+        'response' => {
+          'status' =>{
+            'code' => 405,
+            'message' => 'METHOD NOT ALLOWED'
+          }
+        }
+      }
 
-    # Generate HAML and escape HTML by default.
-    def haml(template, options = {}, locals = {})
-      options[:escape_html] = true unless options.include?(:escape_html)
-      super(template, options, locals)
-    end
+      #set some HTTP headers
+      status 405
+      content_type 'application/json', :charset => 'UTF-8'
+      headers 'Allow' => 'GET'
 
-    # Render a partial and pass local variables.
-    #
-    # Example:
-    #   != partial :games, :players => @players
-    def partial(template, locals = {})
-      haml(template, {:layout => false}, locals)
+      #return the response as the hash converted to json
+      response.to_json
+      
     end
+    
+    def return400( message )
+      
+      #define your response hash
+      response = {
+        'response' => {
+          'status' =>{
+            'code' => 400,
+            'message' => message
+          }
+        }
+      }
+
+      #set some HTTP headers
+      status 400
+      content_type 'application/json', :charset => 'UTF-8'
+
+      #return the response as the hash converted to json
+      response.to_json
+      
+    end
+    
   end
 end

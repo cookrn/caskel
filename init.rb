@@ -9,6 +9,7 @@ rescue LoadError
 end
 
 require "monk/glue"
+require "cassandra"
 
 class Main < Monk::Glue
   set :app_file, __FILE__
@@ -16,6 +17,9 @@ class Main < Monk::Glue
 end
 
 # Connect to cassandra database
+#$cassandra = Cassandra.new( monk_settings(:cassandra)[:keyspace] , "#{monk_settings(:cassandra)[:host]}:#{monk_settings(:cassandra)[:port]}" )
+$cassandra = Cassandra.new( monk_settings(:cassandra)[:keyspace] )
+
 
 # Load all application files.
 Dir[root_path("app/**/*.rb")].each do |file|

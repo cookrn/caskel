@@ -1,7 +1,7 @@
 defaults: &defaults
   :log_level: warn
   :cassandra:
-    :host: 127.0.0.1
+    :host: localhost
     :port: 9160
     :keyspace: Twitter
 

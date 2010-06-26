@@ -7,7 +7,7 @@ class Monk < Thor
 
     $:.unshift File.join(File.dirname(__FILE__), "test")
 
-    Dir['test/**/*_test.rb'].each do |file|
+    Dir['test/routes/*_tests.rb'].each do |file|
       load file unless file =~ /^-/
     end
   end
@@ -21,7 +21,7 @@ class Monk < Thor
     ARGV << (options[:pdf] ? "stories-pdf" : "stories")
     ARGV.delete("--pdf")
 
-    Dir["test/stories/*_test.rb"].each do |file|
+    Dir["test/stories/*_stories.rb"].each do |file|
       load file
     end
   end
@@ -29,27 +29,20 @@ class Monk < Thor
   desc "start ENV", "Start Monk in the supplied environment"
   def start(env = ENV["RACK_ENV"] || "development")
     verify_config(env)
-    invoke :redis
-
+    invoke :cassandra
     exec "env RACK_ENV=#{env} ruby init.rb"
   end
 
-  desc "copy_example EXAMPLE, TARGET", "Copies an example file to its destination"
-  def copy_example(example, target = target_file_for(example))
-    File.exists?(target) ? return : say_status(:missing, target)
-    File.exists?(example) ? copy_file(example, target) : say_status(:missing, example)
-  end
+  CASSANDRA_ENV = ENV["RACK_ENV"] || "development"
+  #CASSANDRA_CNF = File.expand_path(File.join("config", "cassandra", "#{CASSANDRA_ENV}-storage-conf.xml"), File.dirname(__FILE__))
+  CASSANDRA_PID = File.expand_path(File.join("db", "cassandra", CASSANDRA_ENV, "cassandra.pid"), File.dirname(__FILE__))
 
-  REDIS_ENV = ENV["RACK_ENV"] || "development"
-  REDIS_CNF = File.expand_path(File.join("config", "redis", "#{REDIS_ENV}.conf"), File.dirname(__FILE__))
-  REDIS_PID = File.expand_path(File.join("db", "redis", REDIS_ENV, "redis.pid"), File.dirname(__FILE__))
-
-  desc "redis START|STOP", "Start the Redis server"
-  def redis(action = "start")
+  desc "cassandra start|stop", "Start the Cassandra Server"
+  def cassandra(action = "start")
     case action
-    when "start" then redis_start
-    when "stop"  then redis_stop
-    else say_status(:error, "Usage: monk redis start|stop")
+    when "start" then cassandra_start
+    when "stop"  then cassandra_stop
+    else say_status(:error, "Usage: monk cassandra start|stop")
     end
   end
 
@@ -59,37 +52,32 @@ private
     File.dirname(__FILE__)
   end
 
-  def target_file_for(example_file)
-    example_file.sub(".example", "")
-  end
-
   def verify_config(env)
-    verify "config/settings.example.yml"
-    verify "config/redis/#{env}.example.conf"
+    if !(File.exists?("config/settings.example.yml") || File.exists?("config/settingsyml"))
+      say_status :error, "Configuration files missing in config/"
+      exit(1)
+    end
   end
 
-  def verify(example)
-    copy_example(example) unless File.exists?(target_file_for(example))
-  end
-
-  def redis_start
-    unless File.exists?(REDIS_PID)
-      system "redis-server #{REDIS_CNF}"
-      if $?.success?
-        say_status :success, "Redis started"
+  def cassandra_start
+    if File.exists?(CASSANDRA_PID)
+      say_status :error, "Cassandra is already running"
+    else
+      result = %x[cassandra -p #{CASSANDRA_PID}]
+      if result.include? "Starting up server"
+        say_status :success, "Cassandra started"
       else
-        say_status :error, "Redis failed to start"
-        say_status :solution, "Make sure Redis is installed correctly and redis-server is available. The configuration files are located in config/redis."
+        say_status :error, "Cassandra failed to start"
+        say_status :solution, "Make sure Cassandra is installed correctly. You should be able to start the server by running 'cassandra' from the command line."
         exit(1)
       end
     end
   end
 
-  def redis_stop
-    if File.exists?(REDIS_PID)
-      say_status :success, "Redis stopped"
-      system "kill #{File.read(REDIS_PID)}"
-      system "rm #{REDIS_PID}"
+  def cassandra_stop
+    if File.exists?(CASSANDRA_PID)
+      say_status :success, "Cassandra stopped"
+      system "kill #{File.read(CASSANDRA_PID)}"
     end
   end
 end

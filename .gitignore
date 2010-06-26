@@ -1,8 +1,5 @@
-/db/cassandra
 /db/cassandra/*
 /tmp
 /webrat.log
-/vendor
 /vendor/*
-/log
 /log/*

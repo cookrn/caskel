@@ -16,37 +16,37 @@ The only system this has been tested on is a Mac running Snow Leopard. [Cider](h
 	
 2. Which a few commands to make sure it worked - both of these should now point to binaries in your user home's Developer folder
 
-	% which brew
-	% which ruby
+		% which brew
+		% which ruby
 
 3. Install Cassandra
 
-	% brew install cassandra
+		% brew install cassandra
 	
 4. Install Monk
 
-	% sudo gem install monk
+		% sudo gem install monk
 	
 5. Add the caskel skeleton to monk
 
-	% monk add caskel git://github.com/cookrn/caskel.git
+		% monk add caskel git://github.com/cookrn/caskel.git
 	
 6. You should now see caskel when you list available skeletons
 
-	% monk list
+		% monk list
 	
 7. Head to your workspace
 
-	% cd path/to/workspace
+		% cd path/to/workspace
 	
 8. Create a project directory and head in to it - replace 'myapp' with the name of your application
 
-	% mkdir myapp
-	% cd myapp
+		% mkdir myapp
+		% cd myapp
 	
 9. Initialize a new application using caskel
 
-	% monk init -s caskel
+		% monk init -s caskel
 	
 ##Some More Tips
 

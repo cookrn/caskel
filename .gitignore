@@ -1,4 +1,5 @@
 /db/cassandra/*
+!/db/cassandra/IGNOREME
 /tmp
 /webrat.log
 /vendor/*

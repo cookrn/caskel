@@ -35,7 +35,7 @@ class Monk < Thor
 
   CASSANDRA_ENV = ENV["RACK_ENV"] || "development"
   #CASSANDRA_CNF = File.expand_path(File.join("config", "cassandra", "#{CASSANDRA_ENV}-storage-conf.xml"), File.dirname(__FILE__))
-  CASSANDRA_PID = File.expand_path(File.join("db", "cassandra", CASSANDRA_ENV, "cassandra.pid"), File.dirname(__FILE__))
+  CASSANDRA_PID = File.expand_path(File.join("db", "cassandra", "cassandra.pid"), File.dirname(__FILE__))
 
   desc "cassandra start|stop", "Start the Cassandra Server"
   def cassandra(action = "start")

@@ -6,13 +6,13 @@ Suggestions, issues, forking, and pull requests are welcome and encouraged.
 
 The only system this has been tested on is a Mac running Snow Leopard. [Cider](http://www.atmos.org/cider/) is used to bootstrap the development environment. If you would like to use the command line tools, you must have already installed Cassandra and be able to start it via the command line.
 
-##Step by step instructions for Mac
+##Step by step instructions for Mac ()
 
 1. Install Cider
 
 		% curl \
-	   	http://github.com/atmos/cider/raw/master/bootstrap.sh \
-	   	-o - | sh
+	   		http://github.com/atmos/cider/raw/master/bootstrap.sh \
+	   		-o - | sh
 	
 2. Which a few commands to make sure it worked - both of these should now point to binaries in your user home's Developer folder
 

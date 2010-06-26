@@ -47,6 +47,10 @@ The only system this has been tested on is a Mac running Snow Leopard. [Cider](h
 9. Initialize a new application using caskel
 
 		% monk init -s caskel
+		
+10. Download all the dependencies
+
+		% dep vendor --all
 	
 ##Some More Tips
 

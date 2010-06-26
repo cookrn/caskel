@@ -11,8 +11,8 @@ The only system this has been tested on is a Mac running Snow Leopard. [Cider](h
 1. Install Cider
 
 	% curl \
-	  http://github.com/atmos/cider/raw/master/bootstrap.sh \
-	  -o - | sh
+	   http://github.com/atmos/cider/raw/master/bootstrap.sh \
+	   -o - | sh
 	
 2. Which a few commands to make sure it worked - both of these should now point to binaries in your user home's Developer folder
 

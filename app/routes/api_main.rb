@@ -15,12 +15,8 @@ class Main
       }
     }
     
-    #set some HTTP headers
-    status 200
-    content_type 'application/json', :charset => 'UTF-8'
-    
-    #return the response as the hash converted to json
-    response.to_json
+    #return the response
+    return200( response )
     
   end
   

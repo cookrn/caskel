@@ -8,9 +8,10 @@ class ApiStatusesRecentStories < Test::Unit::TestCase
     time = Time.new
     
     #setup some runtime specific variables
-    $user_id = Digest::MD5.hexdigest( time.inspect )
+    $user_id = Digest::MD5.hexdigest( time.inspect ).to_s
     
     $cassandra.insert( :Users , $user_id , { 'screen_name' => 'HOLYTWITTER' + $user_id } )
+    puts "Screen Name: " + 'HOLYTWITTER' + $user_id
     $cassandra.insert( :Statuses , $user_id+'1' , { 'text' => 'oh hai test fake tweet' , 'user_id' => $user_id } )
     $cassandra.insert( :Statuses , $user_id+'2' , { 'text' => '@faketweeter oh hai test fake tweet 2' , 'user_id' => $user_id , 'reply_to_id' => '8' } )
     $cassandra.insert( :UserRelationships , $user_id , { 'user_timeline' => { UUID.new => $user_id+'1' } } )

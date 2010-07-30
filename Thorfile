@@ -61,8 +61,7 @@ private
 
   def cassandra_start
     if File.exists?(CASSANDRA_PID)
-      say_status :warning, "Cassandra may already be running - attempting to stop"
-      cassandra_stop
+      say_status :warning, "Cassandra already running!"
     else
       result = %x[cassandra -p #{CASSANDRA_PID}]
       if result.include? "Starting up server"

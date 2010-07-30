@@ -1,0 +1,8 @@
+development:
+    adapter: cassandra
+    keyspace: Bigrecord
+    servers: localhost:9160
+production:
+    adapter: cassandra
+    keyspace: Bigrecord
+    servers: localhost:9160

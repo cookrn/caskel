@@ -1,12 +1,14 @@
 class Main
   
-  get "/statuses/recent/:user_id" do
+  get "/statuses/recent" do
+  
+    return400("No User ID!")
+  
+  end
+  
+  get "/statuses/recent/*" do
     
-    if !defined? params[:user_id]
-      return400('No User ID!11')
-    end
-    
-    timeline = $cassandra.get(:UserRelationships, params[:user_id], 'user_timeline', :reversed => true)
+    timeline = $cassandra.get(:UserRelationships, params[:splat][0], 'user_timeline', :reversed => true)
     
     #define your response hash
     response = {
@@ -19,12 +21,8 @@ class Main
       }
     }
     
-    #set some HTTP headers
-    status 200
-    content_type 'application/json', :charset => 'UTF-8'
-    
-    #return the response as the hash converted to json
-    response.to_json
+    #return the response
+    return200( response )
     
   end
   
